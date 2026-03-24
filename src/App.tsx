@@ -19,6 +19,11 @@ import Upload from "./pages/Upload";
 import Convert from "./pages/Convert";
 import Leaderboard from "./pages/Leaderboard";
 import ProfilePage from "./pages/Profile";
+import EcoProfile from "./pages/EcoProfile";
+import ImpactMap from "./pages/ImpactMap";
+import Challenges from "./pages/Challenges";
+import EcoCoach from "./pages/EcoCoach";
+import ComingSoon from "./pages/ComingSoon";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
@@ -45,6 +50,11 @@ const App = () => (
               <Route path="/convert" element={<Convert />} />
               <Route path="/leaderboard" element={<Leaderboard />} />
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/eco-profile" element={<EcoProfile />} />
+              <Route path="/impact-map" element={<ImpactMap />} />
+              <Route path="/challenges" element={<Challenges />} />
+              <Route path="/eco-coach" element={<EcoCoach />} />
+              <Route path="/coming-soon" element={<ComingSoon />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

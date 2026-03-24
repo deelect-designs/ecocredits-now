@@ -1,13 +1,13 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, Camera, BarChart3, Trophy, Wallet } from "lucide-react";
+import { Home, Camera, Swords, Bot, User } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
 const navItems = [
   { to: "/dashboard", icon: Home, label: "Home" },
   { to: "/upload", icon: Camera, label: "Upload" },
-  { to: "/dashboard", icon: BarChart3, label: "Stats" },
-  { to: "/leaderboard", icon: Trophy, label: "Rank" },
-  { to: "/convert", icon: Wallet, label: "Convert" },
+  { to: "/challenges", icon: Swords, label: "Challenges" },
+  { to: "/eco-coach", icon: Bot, label: "Coach" },
+  { to: "/eco-profile", icon: User, label: "Profile" },
 ];
 
 export default function BottomNav() {

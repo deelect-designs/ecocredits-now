@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
-import { Coins, Recycle, Leaf, Camera, TrendingUp, ArrowRight } from "lucide-react";
+import { Coins, Recycle, Leaf, Camera, TrendingUp, Shield, Map, Swords, Bot } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip } from "recharts";
+import { calculateEcoScore, DEMO_ECO_SCORE } from "@/lib/eco-score";
 
 interface Submission {
   id: string;
@@ -18,6 +19,7 @@ interface Submission {
 export default function Dashboard() {
   const { profile, user, refreshProfile } = useAuth();
   const [submissions, setSubmissions] = useState<Submission[]>([]);
+  const [ecoScore, setEcoScore] = useState(DEMO_ECO_SCORE.overall);
 
   useEffect(() => {
     if (!user) return;
@@ -29,7 +31,22 @@ export default function Dashboard() {
       .order("created_at", { ascending: false })
       .limit(20)
       .then(({ data }) => {
-        if (data) setSubmissions(data as Submission[]);
+        if (data) {
+          setSubmissions(data as Submission[]);
+          // Calculate eco score
+          const totalKg = data.reduce((s, d) => s + Number(d.quantity), 0);
+          const avgConf = data.length > 0 ? data.reduce((s, d) => s + Number((d as any).confidence_score || 0), 0) / data.length : 0;
+          const score = calculateEcoScore({
+            totalSubmissions: data.length,
+            totalCredits: profile?.total_credits ?? 0,
+            avgConfidence: avgConf || 90,
+            leaderboardRank: 1,
+            totalUsers: 10,
+            daysSinceFirst: Math.max(1, data.length > 0 ? Math.floor((Date.now() - new Date(data[data.length - 1].created_at).getTime()) / 86400000) : 1),
+            activeDays: new Set(data.map(d => new Date(d.created_at).toDateString())).size || 1,
+          });
+          setEcoScore(score.overall);
+        }
       });
   }, [user]);
 
@@ -48,30 +65,37 @@ export default function Dashboard() {
       <div className="container max-w-4xl mx-auto py-6 space-y-6">
         <div>
           <h1 className="text-2xl font-bold">Welcome{profile?.name ? `, ${profile.name}` : ""}!</h1>
-          <p className="text-sm text-muted-foreground">Your recycling dashboard</p>
+          <p className="text-sm text-muted-foreground">Your eco-reputation dashboard</p>
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-4 gap-2">
           <Card className="border-0 shadow-md">
-            <CardContent className="p-4 flex flex-col items-center gap-1">
-              <Coins className="w-6 h-6 text-eco-yellow" />
-              <span className="text-xl font-extrabold">{profile?.total_credits ?? 0}</span>
-              <span className="text-[10px] text-muted-foreground">EcoCredits</span>
+            <CardContent className="p-3 flex flex-col items-center gap-1">
+              <Shield className="w-5 h-5 text-secondary" />
+              <span className="text-lg font-extrabold">{ecoScore}</span>
+              <span className="text-[10px] text-muted-foreground">Eco Score</span>
             </CardContent>
           </Card>
           <Card className="border-0 shadow-md">
-            <CardContent className="p-4 flex flex-col items-center gap-1">
-              <Recycle className="w-6 h-6 text-primary" />
-              <span className="text-xl font-extrabold">{totalKg}</span>
-              <span className="text-[10px] text-muted-foreground">kg Collected</span>
+            <CardContent className="p-3 flex flex-col items-center gap-1">
+              <Coins className="w-5 h-5 text-eco-yellow" />
+              <span className="text-lg font-extrabold">{profile?.total_credits ?? 0}</span>
+              <span className="text-[10px] text-muted-foreground">Credits</span>
             </CardContent>
           </Card>
           <Card className="border-0 shadow-md">
-            <CardContent className="p-4 flex flex-col items-center gap-1">
-              <Leaf className="w-6 h-6 text-primary" />
-              <span className="text-xl font-extrabold">{co2Saved}</span>
-              <span className="text-[10px] text-muted-foreground">kg CO₂ Saved</span>
+            <CardContent className="p-3 flex flex-col items-center gap-1">
+              <Recycle className="w-5 h-5 text-primary" />
+              <span className="text-lg font-extrabold">{totalKg}</span>
+              <span className="text-[10px] text-muted-foreground">kg</span>
+            </CardContent>
+          </Card>
+          <Card className="border-0 shadow-md">
+            <CardContent className="p-3 flex flex-col items-center gap-1">
+              <Leaf className="w-5 h-5 text-primary" />
+              <span className="text-lg font-extrabold">{co2Saved}</span>
+              <span className="text-[10px] text-muted-foreground">CO₂ Saved</span>
             </CardContent>
           </Card>
         </div>
@@ -83,11 +107,30 @@ export default function Dashboard() {
               <Camera className="w-5 h-5" /> Upload Waste
             </Button>
           </Link>
-          <Link to="/convert">
+          <Link to="/eco-profile">
             <Button className="w-full h-14 gap-2" variant="outline" size="lg">
-              <TrendingUp className="w-5 h-5" /> Convert Credits
+              <Shield className="w-5 h-5" /> Eco Profile
             </Button>
           </Link>
+        </div>
+
+        {/* Feature shortcuts */}
+        <div className="grid grid-cols-4 gap-2">
+          {[
+            { to: "/impact-map", icon: Map, label: "Map", color: "text-primary" },
+            { to: "/challenges", icon: Swords, label: "Challenges", color: "text-eco-orange" },
+            { to: "/eco-coach", icon: Bot, label: "AI Coach", color: "text-secondary" },
+            { to: "/convert", icon: TrendingUp, label: "Convert", color: "text-eco-yellow" },
+          ].map(item => (
+            <Link key={item.to} to={item.to}>
+              <Card className="hover:shadow-md transition-shadow cursor-pointer">
+                <CardContent className="p-3 flex flex-col items-center gap-1">
+                  <item.icon className={`w-5 h-5 ${item.color}`} />
+                  <span className="text-[10px] font-medium text-muted-foreground">{item.label}</span>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
         </div>
 
         {/* Chart */}
