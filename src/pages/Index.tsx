@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Recycle, Smartphone, Coins, TrendingUp, Globe, Users, Leaf, ArrowRight, Camera, Cpu, Award, Wallet } from "lucide-react";
+import { Recycle, Coins, TrendingUp, Globe, Users, Leaf, ArrowRight, Camera, Cpu, Award, Wallet, Shield, Map, Swords, Bot, Rocket } from "lucide-react";
 
 const stats = [
   { icon: Recycle, value: "2.5M+", label: "kg Waste Recycled", color: "text-primary" },
@@ -17,6 +17,13 @@ const steps = [
   { icon: Wallet, title: "Convert Value", desc: "Convert credits to cash, airtime, or savings" },
 ];
 
+const platformFeatures = [
+  { icon: Shield, title: "Eco Score & Reputation", desc: "Build a verified environmental reputation — not just points, a trust score usable beyond the app.", link: "/eco-profile" },
+  { icon: Map, title: "Real-World Impact Map", desc: "See exactly where your actions helped. Visual proof of your environmental contribution.", link: "/impact-map" },
+  { icon: Swords, title: "Community Challenges", desc: "City vs city, school vs school. Compete as communities for real prizes and real impact.", link: "/challenges" },
+  { icon: Bot, title: "AI Personal Eco Coach", desc: "Get personalized insights and tips to maximize your earnings and environmental impact.", link: "/eco-coach" },
+];
+
 export default function Index() {
   return (
     <div className="flex flex-col">
@@ -25,13 +32,13 @@ export default function Index() {
         <div className="absolute inset-0 gradient-primary opacity-5" />
         <div className="container relative text-center max-w-3xl mx-auto space-y-6">
           <div className="inline-flex items-center gap-2 bg-accent px-4 py-1.5 rounded-full text-sm font-medium text-accent-foreground">
-            <Leaf className="w-4 h-4" /> Turning waste into opportunity
+            <Leaf className="w-4 h-4" /> Build your environmental reputation
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">
-            Turn Waste into <span className="text-gradient">Financial Opportunity</span>
+            Build Your <span className="text-gradient">Environmental Reputation</span> & Earn From Real Impact
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            EcoCredit AI rewards people for recycling waste and creating a cleaner planet. Earn digital credits, convert to real value.
+            EcoCredit AI is a credibility platform — not just a reward app. Earn verified eco-credits, build a public impact profile, and unlock real-world opportunities.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
             <Link to="/signup">
@@ -59,7 +66,7 @@ export default function Index() {
                   <li>• 2 billion tons of waste generated annually worldwide</li>
                   <li>• Informal waste pickers earn less than $2/day</li>
                   <li>• 91% of plastic is never recycled</li>
-                  <li>• Financial & digital exclusion for waste collectors</li>
+                  <li>• No verified way to prove environmental contribution</li>
                 </ul>
               </CardContent>
             </Card>
@@ -67,10 +74,10 @@ export default function Index() {
               <CardContent className="p-6 space-y-4">
                 <h3 className="text-xl font-bold text-primary">Our Solution</h3>
                 <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li>• AI-powered waste identification & tracking</li>
-                  <li>• Digital credit rewards for every collection</li>
-                  <li>• Mobile money, airtime, and savings conversion</li>
-                  <li>• Financial inclusion for underserved communities</li>
+                  <li>• AI-verified waste identification & fraud prevention</li>
+                  <li>• Dynamic Eco Score — a trusted reputation index</li>
+                  <li>• Public impact profiles for jobs, grants, scholarships</li>
+                  <li>• Community challenges driving real local change</li>
                 </ul>
               </CardContent>
             </Card>
@@ -100,8 +107,35 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Impact Stats */}
+      {/* Platform Features — NEW */}
       <section className="py-16 bg-muted/50">
+        <div className="container max-w-5xl mx-auto space-y-10">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold">More Than a Reward App</h2>
+            <p className="text-muted-foreground mt-2">A credibility platform for the circular economy</p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-4">
+            {platformFeatures.map((f, i) => (
+              <Link to={f.link} key={i}>
+                <Card className="h-full hover:shadow-lg transition-shadow border-0 shadow-md">
+                  <CardContent className="p-6 flex gap-4 items-start">
+                    <div className="w-12 h-12 rounded-xl gradient-primary flex items-center justify-center shrink-0">
+                      <f.icon className="w-6 h-6 text-primary-foreground" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold">{f.title}</h4>
+                      <p className="text-sm text-muted-foreground mt-1">{f.desc}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Impact Stats */}
+      <section className="py-16">
         <div className="container max-w-4xl mx-auto text-center space-y-10">
           <h2 className="text-3xl font-bold">Our Global Impact</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -118,11 +152,25 @@ export default function Index() {
         </div>
       </section>
 
+      {/* Coming Soon teaser */}
+      <section className="py-16 bg-muted/50">
+        <div className="container max-w-3xl mx-auto text-center space-y-6">
+          <Rocket className="w-10 h-10 text-secondary mx-auto" />
+          <h2 className="text-3xl font-bold">What's Coming Next</h2>
+          <p className="text-muted-foreground">Carbon credit trading, waste marketplace, micro-investments, offline mode, and more.</p>
+          <Link to="/coming-soon">
+            <Button variant="outline" className="gap-2">
+              <Rocket className="w-4 h-4" /> Explore Roadmap
+            </Button>
+          </Link>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="py-20">
         <div className="container max-w-2xl mx-auto text-center space-y-6">
-          <h2 className="text-3xl font-bold">Ready to Make an Impact?</h2>
-          <p className="text-muted-foreground">Join thousands of eco-warriors turning waste into financial opportunity.</p>
+          <h2 className="text-3xl font-bold">Ready to Build Your Eco Reputation?</h2>
+          <p className="text-muted-foreground">Join thousands of eco-warriors building verified environmental impact.</p>
           <Link to="/signup">
             <Button size="lg" className="gradient-primary border-0 text-primary-foreground gap-2">
               Get Started Free <ArrowRight className="w-4 h-4" />
@@ -141,7 +189,7 @@ export default function Index() {
           <div className="flex gap-4">
             <Link to="/about" className="hover:text-primary">About</Link>
             <Link to="/impact" className="hover:text-primary">Impact</Link>
-            <Link to="/how-it-works" className="hover:text-primary">How It Works</Link>
+            <Link to="/coming-soon" className="hover:text-primary">Roadmap</Link>
           </div>
         </div>
       </footer>
