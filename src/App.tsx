@@ -24,6 +24,7 @@ import ImpactMap from "./pages/ImpactMap";
 import Challenges from "./pages/Challenges";
 import EcoCoach from "./pages/EcoCoach";
 import ComingSoon from "./pages/ComingSoon";
+import Missions from "./pages/Missions";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
@@ -54,6 +55,7 @@ const App = () => (
               <Route path="/impact-map" element={<ImpactMap />} />
               <Route path="/challenges" element={<Challenges />} />
               <Route path="/eco-coach" element={<EcoCoach />} />
+              <Route path="/missions" element={<Missions />} />
               <Route path="/coming-soon" element={<ComingSoon />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="*" element={<NotFound />} />

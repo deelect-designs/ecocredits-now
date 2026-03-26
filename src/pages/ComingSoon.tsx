@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ShoppingCart, Coins, TreePine, WifiOff, Shield, Video, Building2, GraduationCap, Rocket } from "lucide-react";
+import { ShoppingCart, Coins, TreePine, WifiOff, Shield, Video, Building2, GraduationCap, Rocket, Landmark, Flame } from "lucide-react";
 
 const features = [
   {
@@ -58,6 +58,20 @@ const features = [
     description: "Groups compete in eco challenges. Powerful community engagement in schools, churches, and social organizations.",
     tags: ["Community", "Groups"],
     color: "bg-eco-green",
+  },
+  {
+    icon: Landmark,
+    title: "Government Waste Tracking",
+    description: "Official waste monitoring integration — subsidies per kg collected, smart heatmaps, and policy enforcement for illegal dumping.",
+    tags: ["Government", "Policy"],
+    color: "bg-secondary",
+  },
+  {
+    icon: Flame,
+    title: "Waste-to-Energy Network",
+    description: "Connect non-recyclable waste to cement factories, incineration plants, and energy systems. No waste is useless.",
+    tags: ["Processing", "Energy"],
+    color: "bg-eco-orange",
   },
 ];
 
