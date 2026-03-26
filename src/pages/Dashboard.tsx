@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
-import { Coins, Recycle, Leaf, Camera, TrendingUp, Shield, Map, Swords, Bot } from "lucide-react";
+import { Coins, Recycle, Leaf, Camera, TrendingUp, Shield, Map, Swords, Bot, Target } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip } from "recharts";
 import { calculateEcoScore, DEMO_ECO_SCORE } from "@/lib/eco-score";
 
@@ -120,6 +120,7 @@ export default function Dashboard() {
             { to: "/impact-map", icon: Map, label: "Map", color: "text-primary" },
             { to: "/challenges", icon: Swords, label: "Challenges", color: "text-eco-orange" },
             { to: "/eco-coach", icon: Bot, label: "AI Coach", color: "text-secondary" },
+            { to: "/missions", icon: Target, label: "Missions", color: "text-eco-green" },
             { to: "/convert", icon: TrendingUp, label: "Convert", color: "text-eco-yellow" },
           ].map(item => (
             <Link key={item.to} to={item.to}>
